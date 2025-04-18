@@ -1,19 +1,32 @@
-import swaggerJSDoc from 'swagger-jsdoc';
+import {extendZodWithOpenApi, OpenAPIRegistry, OpenApiGeneratorV3 } from '@asteasolutions/zod-to-openapi';
+import { UserCreate, User } from '../schemas/user';
+import { z } from 'zod';
 
-const swaggerDef = {
-  openapi: '3.0.3',
-  info: {
-    title: 'Serverless‑Express API',
-    version: '1.0.0',
-    description: 'Example API documented with OpenAPI 3',
+extendZodWithOpenApi(z); 
+
+export const registry = new OpenAPIRegistry();
+
+
+/* --- スキーマ登録 --- */
+registry.register('UserCreate', UserCreate);
+registry.register('User',       User);
+
+/* --- パス登録 --- */
+registry.registerPath({
+  method: 'post',
+  path: '/users',
+  tags: ['User'],
+  request: {
+    body: { content: { 'application/json': { schema: UserCreate } } },
   },
-  servers: [
-    { url: 'http://localhost:3000', description: 'Local' },
-    // 本番は API Gateway の URL を追加
-  ],
-};
+  responses: {
+    201: { description: 'Created', content: { 'application/json': { schema: User } } },
+  },
+});
 
-export const swaggerSpec = swaggerJSDoc({
-  definition: swaggerDef,
-  apis: ['src/routes/**/*.ts', 'src/app.ts', 'src/docs/**/*.yaml'], // ← 好きな場所
+/* --- OpenAPI ドキュメント生成 (変更点) --- */
+const generator      = new OpenApiGeneratorV3(registry.definitions);
+export const swaggerSpec = generator.generateDocument({
+  openapi: '3.0.3',
+  info: { title: 'Serverless‑Express API', version: '1.0.0' },
 });

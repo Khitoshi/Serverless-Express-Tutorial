@@ -45,8 +45,9 @@ docker compose exec api npx prisma migrate dev --name init
 pnpm add swagger-ui-express swagger-jsdoc
 pnpm add -D @types/swagger-jsdoc
 
+pnpm add zod
+pnpm add -D @asteasolutions/zod-to-openapi
 ```
-
 
 docker-compose down -v
 docker-compose build --no-cache
