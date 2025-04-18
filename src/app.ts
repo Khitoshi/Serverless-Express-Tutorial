@@ -1,4 +1,12 @@
-import express from 'express';
-export const app = express();
+import express, { Application } from 'express';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './docs/swagger';
 
-app.get('/', (_req, res) => res.json({ hello: 'world 123' }));
+export const app: Application = express();
+
+/* --- API ルートここ --- */
+app.get('/', (_req, res) => res.json({ ok: true }));
+
+/* --- Swagger UI & JSON --- */
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get('/openapi.json', (_req, res) => res.json(swaggerSpec));

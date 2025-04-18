@@ -42,6 +42,9 @@ pnpm add -D \
   @types/body-parser@^1.19.5
 docker compose exec api npx prisma migrate dev --name init
 
+pnpm add swagger-ui-express swagger-jsdoc
+pnpm add -D @types/swagger-jsdoc
+
 ```
 
 
