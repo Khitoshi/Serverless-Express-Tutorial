@@ -7,7 +7,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "db:seed": "prisma db seed -- --environment local",
+    "db:seed:test": "prisma db seed -- --environment test",
+    "db:seed:dev": "prisma db seed -- --environment development",
+    "db:seed:prod": "prisma db seed -- --environment production",
+    "db:generate": "pnpm with-env prisma generate",
+    "db:migrate:deploy": "pnpm with-env prisma migrate deploy",
+    "db:migrate:dev": "pnpm with-env prisma migrate dev",
+    "db:migrate:reset": "pnpm with-env prisma migrate reset -f",
+    "db:push": "pnpm prisma db push",
+    "with-env": "dotenv -c .env --"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +39,7 @@
     "@types/node": "^22.14.1",
     "@types/serve-static": "^1.15.7",
     "@types/swagger-jsdoc": "^6.0.4",
+    "dotenv-cli": "^8.0.0",
     "prisma": "^6.6.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
