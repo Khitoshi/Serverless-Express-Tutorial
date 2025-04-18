@@ -1,6 +1,6 @@
 # Serverless-Express-Tutorial
-Serverless Expressのチュートリアル
 
+Serverless Expressのチュートリアル
 
 ## WSL内に node をインストールする
 
@@ -20,7 +20,7 @@ node -v
 npm -v
 ```
 
-## 
+## express
 
 ```
 npm install -g pnpm
@@ -33,5 +33,18 @@ pnpm remove express @types/express
 pnpm add express@4
 pnpm add -D @types/express@4
 
+rm -rf node_modules pnpm-lock.yaml
+pnpm add express@^4
+pnpm add -D \
+  @types/express@^4.17.21 \
+  @types/express-serve-static-core@^4.17.41 \
+  @types/serve-static@^1.15.7 \
+  @types/body-parser@^1.19.5
+docker compose exec api npx prisma migrate dev --name init
 
 ```
+
+
+docker-compose down -v
+docker-compose build --no-cache
+docker-compose up
