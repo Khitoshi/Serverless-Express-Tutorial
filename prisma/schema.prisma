@@ -18,6 +18,12 @@ generator client {
   // previewFeatures = ["noEngine"]
 }
 
+generator markdown {
+  provider = "prisma-markdown"
+  output   = "./ERD.md"
+  title    = "ER図"
+}
+
 // 例: User テーブル
 model User {
   id        String   @id @default(uuid())
